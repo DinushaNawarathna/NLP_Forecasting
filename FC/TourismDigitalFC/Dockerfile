@@ -2,8 +2,10 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
+# Cache bust: v2
 COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir pytz joblib && \
     pip install --no-cache-dir -r requirements.txt
 
 COPY . .

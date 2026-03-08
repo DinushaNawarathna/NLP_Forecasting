@@ -1,0 +1,386 @@
+# ============================================================================
+# TOURISM DIGITAL TWINS PROJECT - GITIGNORE
+# ============================================================================
+
+# ============================================================================
+# PYTHON
+# ============================================================================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# ============================================================================
+# MACHINE LEARNING / DATA SCIENCE
+# ============================================================================
+
+# Model files (large binary files)
+
+*.pickle
+*.h5
+*.hdf5
+*.joblib
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+
+# Large datasets (configure based on your needs)
+# Uncomment if you want to exclude large CSVs
+# *.csv
+# However, sample/synthetic data should be included
+# !*synthetic*.csv
+# !*sample*.csv
+
+# Output files
+*_output.csv
+forecast_output.csv
+prophet_forecast_function_output.csv
+prophet_forecast_output.csv
+
+# Plots/visualizations (regenerable)
+*.png
+*.jpg
+*.jpeg
+*.pdf
+*.svg
+forecast_plot.png
+prophet_forecast_plot.png
+prophet_components_plot.png
+
+# Tensorboard logs
+runs/
+logs/
+lightning_logs/
+
+# Weights & Biases
+wandb/
+
+# MLflow
+mlruns/
+
+# ============================================================================
+# FLUTTER / DART
+# ============================================================================
+
+# Miscellaneous
+*.class
+*.log
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ / Android Studio
+*.iml
+*.ipr
+*.iws
+.idea/
+*.iml
+**/android/**/gradle-wrapper.jar
+**/android/.gradle
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+**/android/key.properties
+*.jks
+*.keystore
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio build artifacts
+**/android/app/debug
+**/android/app/profile
+**/android/app/release
+
+# iOS / Xcode
+**/ios/**/*.mode1v3
+**/ios/**/*.mode2v3
+**/ios/**/*.moved-aside
+**/ios/**/*.pbxuser
+**/ios/**/*.perspectivev3
+**/ios/**/*sync/
+**/ios/**/.sconsign.dblite
+**/ios/**/.tags*
+**/ios/**/.vagrant/
+**/ios/**/DerivedData/
+**/ios/**/Icon?
+**/ios/**/Pods/
+**/ios/**/.symlinks/
+**/ios/**/profile
+**/ios/**/xcuserdata
+**/ios/.generated/
+**/ios/Flutter/.last_build_id
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/ephemeral
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_assets/
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.*
+
+# macOS
+**/macos/Flutter/GeneratedPluginRegistrant.swift
+**/macos/Flutter/ephemeral
+
+# Linux
+**/linux/flutter/generated_plugin_registrant.cc
+**/linux/flutter/generated_plugin_registrant.h
+
+# Windows
+**/windows/flutter/generated_plugin_registrant.cc
+**/windows/flutter/generated_plugin_registrant.h
+
+# Web
+**/web/flutter_service_worker.js
+
+# ============================================================================
+# IDE / EDITOR
+# ============================================================================
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+.history/
+*.vsix
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+# PyCharm
+.idea/
+*.iml
+.idea_modules/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+*.swp
+*.swo
+*~
+
+# ============================================================================
+# OPERATING SYSTEM
+# ============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ============================================================================
+# API / SECRETS
+# ============================================================================
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.development
+.env.test
+.env.production
+*.env
+
+# API keys and secrets
+secrets/
+secrets.json
+api_keys.txt
+config.local.yml
+
+# ============================================================================
+# DOCUMENTATION
+# ============================================================================
+
+# Sphinx documentation
+docs/_build/
+
+# ============================================================================
+# DEPENDENCIES / NODE (if used)
+# ============================================================================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# ============================================================================
+# TEMPORARY FILES
+# ============================================================================
+
+*.tmp
+*.temp
+*.bak
+*.backup
+*~
+
+# ============================================================================
+# PROJECT SPECIFIC
+# ============================================================================
+
+# Keep synthetic/sample data for demo purposes
+!*synthetic*.csv
+!sigiriya_synthetic_visitors_2023_2025.csv
+
+# HTML preview files (can be regenerated)
+api_client.html
+
+# Duplicate files
+*copy.ipynb

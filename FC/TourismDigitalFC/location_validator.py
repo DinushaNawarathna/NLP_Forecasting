@@ -9,23 +9,46 @@ Allows all Sigiriya-related queries to pass through.
 import re
 from typing import Tuple, Optional
 
-# Specific city/town names (not generic terms)
+# Specific city/town/landmark names that are NOT Sigiriya
 SPECIFIC_LOCATIONS = [
-    # Major Sri Lankan cities and regions (specific names only)
-    'galle', 'colombo', 'kandy', 'nuwara eliya', 
-    'anuradhapura', 'polonnaruwa', 'mirissa', 'arugambe', 'arugam bay',
-    'ella', 'hikkaduwa', 'matara', 'unawatuna', 'dambulla', 'jaffna',
-    'trincomalee', 'batticaloa', 'badulla', 'ratnapura', 'puttalam',
-    'negombo', 'horton plains', 'pigeon island', 'adam\'s peak',
-    # Suburbs and towns near Colombo
+    # --- Nearby locations (Matale/Dambulla area) ---
+    'pidurangala', 'kekirawa', 'dambulla', 'habarana', 'inamaluwa',
+    'galewela', 'matale', 'rattota', 'pallepola', 'naula',
+    'elahera', 'hingurakgoda', 'medirigiriya', 'manampitiya',
+
+    # --- Major Sri Lankan cities ---
+    'colombo', 'kandy', 'galle', 'jaffna', 'anuradhapura', 'polonnaruwa',
+    'nuwara eliya', 'badulla', 'ratnapura', 'negombo', 'puttalam',
+    'trincomalee', 'batticaloa', 'ampara', 'kurunegala', 'kegalle',
+    'gampaha', 'kalutara', 'hambantota', 'monaragala', 'mullaitivu',
+    'mannar', 'vavuniya', 'kilinochchi',
+
+    # --- Tourist and heritage sites ---
+    'mirissa', 'unawatuna', 'hikkaduwa', 'arugam bay', 'arugambe',
+    'ella', 'horton plains', 'adam\'s peak', 'sri pada', 'knuckles',
+    'minneriya', 'hurulu eco park', 'kaudulla', 'wilpattu', 'yala',
+    'udawalawe', 'sinharaja', 'bundala', 'kumana', 'lunugamvehera',
+    'pigeon island', 'nilaveli', 'pasikuda', 'kalpitiya',
+    'bentota', 'beruwala', 'weligama', 'tangalle', 'dickwella',
+    'matara', 'aluthgama', 'ambalangoda', 'balapitiya',
+
+    # --- Historical sites ---
+    'yapahuwa', 'panduwasnuwara', 'ritigala', 'mihintale',
+    'aukana', 'sasseruwa', 'buduruvagala', 'mulkirigala',
+    'kataragama', 'devinuwara', 'rameswaram',
+    'lankatilaka', 'embekke', 'gadaladeniya',
+
+    # --- Colombo and suburbs ---
     'malabe', 'sri jayawardenepura', 'kotte', 'dehiwala', 'mount lavinia',
-    'moratuwa', 'ratmalana', 'kelaniya', 'kaduwela', 'godagama',
-    'kolonnawa', 'padukka', 'avissawella', 'boralesgamuwa', 'angulana',
-    # International locations
+    'moratuwa', 'ratmalana', 'kelaniya', 'kaduwela', 'kolonnawa',
+    'boralesgamuwa', 'avissawella', 'padukka', 'angulana',
+
+    # --- International locations ---
     'paris', 'london', 'new york', 'tokyo', 'dubai', 'singapore',
     'bangkok', 'bali', 'phuket', 'koh samui', 'hanoi', 'ho chi minh',
-    'yangon', 'mandalay', 'phnom penh', 'laos', 'vietnam', 'thailand',
-    'malaysia', 'indonesia', 'india', 'nepal', 'bhutan'
+    'yangon', 'mandalay', 'phnom penh', 'vietnam', 'thailand',
+    'malaysia', 'indonesia', 'india', 'nepal', 'bhutan',
+    'maldives', 'mumbai', 'delhi', 'chennai', 'bangalore',
 ]
 
 ERROR_MESSAGE = "I'm unable to process this request. I can only help with Sigiriya weather and crowd information 🏔️"

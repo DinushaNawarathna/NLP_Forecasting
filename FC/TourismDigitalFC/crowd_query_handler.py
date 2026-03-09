@@ -266,11 +266,18 @@ class CrowdHandler:
         # Get crowd data
         crowd_data = get_crowd_dict_for_dates(dates)
         
+        if not crowd_data or not weather_data:
+            return "Sorry, prediction models are still loading. Please try again in a moment."
+        
         # Create combined scoring
         combined_scores = []
         for i, date in enumerate(dates):
+            if i >= len(weather_data) or i >= len(crowd_data):
+                break
             weather = weather_data[i]
             crowd = crowd_data[i]
+            if 'error' in crowd or 'visitors' not in crowd:
+                continue
             
             # Weather score (0-10, higher is better)
             temp_score = 10 - abs(weather['temperature_celsius'] - 26) * 0.4
@@ -343,7 +350,12 @@ class CrowdHandler:
     def handle_today_crowd_query(self) -> str:
         """Handle 'is it crowded today?' type queries - show only crowd data."""
         date = self.today
-        crowd_data = get_crowd_dict_for_dates([date])[0]
+        crowd_results = get_crowd_dict_for_dates([date])
+        if not crowd_results:
+            return "Sorry, crowd prediction models are still loading. Please try again in a moment."
+        crowd_data = crowd_results[0]
+        if 'error' in crowd_data:
+            return f"Sorry, I couldn't retrieve crowd data right now. Please try again later."
         
         level, symbol, desc = self.get_crowd_level_category(crowd_data['visitors'])
         is_weekend = "on the weekend" if date.weekday() >= 5 else "on a weekday"
@@ -359,7 +371,12 @@ class CrowdHandler:
         Handle queries about crowd on a specific date.
         Shows ONLY crowd data (not weather).
         """
-        crowd_data = get_crowd_dict_for_dates([date])[0]
+        crowd_results = get_crowd_dict_for_dates([date])
+        if not crowd_results:
+            return "Sorry, crowd prediction models are still loading. Please try again in a moment."
+        crowd_data = crowd_results[0]
+        if 'error' in crowd_data:
+            return f"Sorry, I couldn't retrieve crowd data for that date. Please try again later."
         
         date_str = date.strftime('%A, %B %d, %Y')
         level, symbol, desc = self.get_crowd_level_category(crowd_data['visitors'])
@@ -375,8 +392,13 @@ class CrowdHandler:
         dates = [self.today + datetime.timedelta(days=i) for i in range(7)]
         crowd_data = get_crowd_dict_for_dates(dates)
         
-        # Find best and worst days
-        all_visitors = [d['visitors'] for d in crowd_data]
+        if not crowd_data:
+            return "Sorry, crowd prediction models are still loading. Please try again in a moment."
+        
+        # Find best and worst days - filter out error entries
+        all_visitors = [d['visitors'] for d in crowd_data if 'visitors' in d and 'error' not in d]
+        if not all_visitors:
+            return "Sorry, I couldn't retrieve crowd data for this week. Please try again later."
         avg_visitors = sum(all_visitors) / len(all_visitors)
         quiet_day_idx = min(enumerate(all_visitors), key=lambda x: x[1])[0]
         busy_day_idx = max(enumerate(all_visitors), key=lambda x: x[1])[0]
@@ -405,8 +427,13 @@ class CrowdHandler:
         
         crowd_data = get_crowd_dict_for_dates(weekends)
         
-        # Calculate weekend statistics
-        all_visitors = [c['visitors'] for c in crowd_data]
+        if not crowd_data:
+            return "Sorry, crowd prediction models are still loading. Please try again in a moment."
+        
+        # Calculate weekend statistics - filter out error entries
+        all_visitors = [c['visitors'] for c in crowd_data if 'visitors' in c and 'error' not in c]
+        if not all_visitors:
+            return "Sorry, I couldn't retrieve weekend crowd data. Please try again later."
         avg_weekend = int(sum(all_visitors) / len(all_visitors))
         peak_weekend_idx = all_visitors.index(max(all_visitors))
         quiet_weekend_idx = all_visitors.index(min(all_visitors))
@@ -430,6 +457,9 @@ class CrowdHandler:
         
         crowd_data = get_crowd_dict_for_dates(dates)
         
+        if not crowd_data:
+            return "Sorry, crowd prediction models are still loading. Please try again in a moment."
+        
         response = "ANNUAL CROWD FORECAST - 2026\n"
         response += "─" * 40 + "\n\n"
         
@@ -437,13 +467,19 @@ class CrowdHandler:
                   'July', 'August', 'September', 'October', 'November', 'December']
         
         for i, crowd in enumerate(crowd_data):
+            if 'error' in crowd or 'visitors' not in crowd:
+                response += f"{months[i]}\n"
+                response += f"  Crowd: Data unavailable\n\n"
+                continue
             level, symbol, _ = self.get_crowd_level_category(crowd['visitors'])
             
             response += f"{months[i]}\n"
             response += f"  Crowd: {symbol} {level} ({crowd['visitors']} visitors)\n\n"
         
         # Annual statistics
-        all_visitors = [c['visitors'] for c in crowd_data]
+        all_visitors = [c['visitors'] for c in crowd_data if 'visitors' in c and 'error' not in c]
+        if not all_visitors:
+            return response + "\nInsufficient data for annual summary."
         avg_year = int(sum(all_visitors) / len(all_visitors))
         peak_month_idx = all_visitors.index(max(all_visitors))
         quiet_month_idx = all_visitors.index(min(all_visitors))
@@ -543,11 +579,18 @@ class CrowdHandler:
         months = ['January', 'February', 'March', 'April', 'May', 'June',
                   'July', 'August', 'September', 'October', 'November', 'December']
         
+        if not crowd_data or not weather_data:
+            return "Sorry, prediction models are still loading. Please try again in a moment."
+        
         # Create combined scoring
         combined_scores = []
         for i, date in enumerate(dates):
+            if i >= len(weather_data) or i >= len(crowd_data):
+                break
             weather = weather_data[i]
             crowd = crowd_data[i]
+            if 'error' in crowd or 'visitors' not in crowd:
+                continue
             
             # Weather score (0-10, higher is better)
             temp_score = 10 - abs(weather['temperature_celsius'] - 26) * 0.4
@@ -719,11 +762,16 @@ def get_crowd_handler():
 
 def process_crowd_query(query: str) -> str:
     """Process a crowd-related query."""
-    # Check location validation first
-    should_reject, error_message = should_reject_query(query)
-    if should_reject:
-        return error_message
-    
-    handler = get_crowd_handler()
-    return handler.handle_query(query)
+    try:
+        # Check location validation first
+        should_reject, error_message = should_reject_query(query)
+        if should_reject:
+            return error_message
+        
+        handler = get_crowd_handler()
+        return handler.handle_query(query)
+    except IndexError:
+        return "Sorry, crowd prediction data is temporarily unavailable. Please try again in a moment."
+    except Exception as e:
+        return f"Sorry, I encountered an issue processing your crowd query. Please try again later."
 

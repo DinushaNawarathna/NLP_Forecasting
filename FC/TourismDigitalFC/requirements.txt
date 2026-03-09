@@ -5,6 +5,7 @@ pmdarima>=2.0
 statsmodels>=0.14
 prophet>=1.1
 scikit-learn==1.7.2
+xgboost>=2.0
 fastapi>=0.104
 uvicorn>=0.24
 pydantic[email]>=2.0
